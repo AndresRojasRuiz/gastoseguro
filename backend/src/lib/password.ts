@@ -3,10 +3,11 @@
  *
  * - Hash Argon2id con los parámetros mínimos recomendados por la OWASP Password Storage
  *   Cheat Sheet (m=19 MiB, t=2, p=1). Cada hash incluye su propia sal aleatoria.
- * - Política alineada con NIST SP 800-63B-4 y OWASP ASVS 5.0: longitud mínima de 15 caracteres
- *   (exigida por NIST cuando la contraseña es el único factor) y máxima de 128, sin reglas de
- *   composición arbitrarias, normalización Unicode NFKC y rechazo de contraseñas comunes,
- *   triviales o relacionadas con el usuario.
+ * - Política referenciada a NIST SP 800-63B-4 y OWASP ASVS 5.0: longitud mínima de 15 caracteres
+ *   (exigida por NIST cuando la contraseña es el único factor) y máxima de 128, sin exigir
+ *   mayúsculas, números ni símbolos, y rechazo de contraseñas comunes, triviales o relacionadas
+ *   con el usuario. Desviaciones documentadas en SECURITY.md: normalización Unicode NFKC (NIST
+ *   recomienda NFC; ASVS 6.2.8) y mínimo de cinco caracteres distintos (ASVS 6.2.5).
  * - Rehash transparente si los parámetros del hash almacenado quedan obsoletos (agilidad
  *   criptográfica).
  */

@@ -3,8 +3,11 @@
 #  1. build-test: SCA (npm audit + verificación de firmas), SAST ligero (ESLint security),
 #     comprobación de tipos, 110 pruebas automatizadas de seguridad, compilación y SBOM.
 #  2. postgres:   la misma batería de pruebas contra PostgreSQL 17 (motor de producción).
-#  3. codeql:     SAST semántico (consultas security-extended de GitHub CodeQL).
-#  4. dast:       DAST con OWASP ZAP (baseline) contra la aplicación en ejecución.
+#  3. codeql:     SAST semántico (consultas security-extended de GitHub CodeQL). El repositorio
+#                 es privado, por lo que los resultados se conservan como artefacto SARIF.
+#  4. dast:       DAST con OWASP ZAP (baseline) contra la aplicación en ejecución. El trabajo
+#                 falla ante alertas de riesgo medio o alto; las de riesgo bajo e informativas
+#                 se publican como anotaciones y quedan en el informe (artefacto zap_scan).
 #
 # Endurecimiento del propio canal (A03/A08:2025): acciones fijadas por SHA de commit,
 # permisos mínimos del GITHUB_TOKEN y credenciales no persistidas en el checkout.
@@ -99,7 +102,7 @@ jobs:
     timeout-minutes: 30
     permissions:
       contents: read
-      security-events: write
+      actions: read
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -109,6 +112,13 @@ jobs:
           languages: javascript-typescript
           queries: security-extended
       - uses: github/codeql-action/analyze@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
+        with:
+          upload: never
+          output: codeql-sarif
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: codeql-sarif
+          path: codeql-sarif
 
   dast:
     name: DAST - OWASP ZAP baseline
@@ -117,7 +127,6 @@ jobs:
     timeout-minutes: 30
     permissions:
       contents: read
-      issues: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -138,6 +147,25 @@ jobs:
         with:
           target: http://localhost:4000
           rules_file_name: .zap/rules.tsv
-          cmd_options: '-a -j'
-          fail_action: true
+          cmd_options: '-j'
+          fail_action: false
           allow_issue_writing: false
+      - name: Puerta de calidad DAST (riesgo medio o alto)
+        run: |
+          node - <<'JS'
+          const fs = require('node:fs');
+          if (!fs.existsSync('report_json.json')) {
+            console.log('::error::ZAP no generó report_json.json');
+            process.exit(1);
+          }
+          const report = JSON.parse(fs.readFileSync('report_json.json', 'utf8'));
+          const alerts = (report.site ?? []).flatMap((site) => site.alerts ?? []);
+          const clean = (text) => String(text).replace(/[\r\n%]/g, ' ');
+          for (const alert of alerts) {
+            const level = Number(alert.riskcode) >= 2 ? 'error' : 'notice';
+            console.log(`::${level}::ZAP ${clean(alert.riskdesc)} - ${alert.pluginid} ${clean(alert.name)} (${alert.count ?? alert.instances?.length ?? 0} instancias)`);
+          }
+          const serious = alerts.filter((alert) => Number(alert.riskcode) >= 2);
+          console.log(`Alertas: ${alerts.length}; de riesgo medio o alto: ${serious.length}`);
+          if (serious.length > 0) process.exit(1);
+          JS

@@ -52,7 +52,9 @@ corrección coordinada, reconociendo la autoría del hallazgo si así se desea.
   limitación de tasa, bloqueo temporal y alertas).
 - La auditoría se guarda en la misma base de datos que la aplicación; en producción el registro
   técnico y las alertas deben enviarse a un SIEM separado (ASVS 16.4.3).
-- Las contraseñas se normalizan con Unicode NFKC antes de derivarlas, como recomienda NIST,
-  lo que se aparta de la literalidad de ASVS 6.2.8.
+- Las contraseñas se normalizan con Unicode NFKC antes de derivarlas. NIST SP 800-63B-4
+  recomienda NFC, por lo que es una desviación documentada respecto a NIST y a ASVS 6.2.8.
+- Se rechazan las contraseñas con menos de cinco caracteres distintos. Es una regla de
+  composición adicional que se aparta de NIST SP 800-63B-4 y de ASVS 6.2.5.
 - No hay recuperación de cuenta por correo electrónico; el reinicio de MFA lo realiza un
   administrador tras verificar la identidad por un canal externo.
