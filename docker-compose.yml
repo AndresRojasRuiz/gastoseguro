@@ -1,0 +1,85 @@
+# -----------------------------------------------------------------------------------------
+# Despliegue de referencia de GastoSeguro: proxy TLS (Caddy) -> API + SPA (Node) -> PostgreSQL
+#
+# Preparación:  node scripts/production-env.mjs   (genera deploy/app.env y deploy/db.env)
+# Arranque:     docker compose up -d --build
+# Acceso:       https://gastoseguro.localhost  (certificado de la CA interna de Caddy)
+# -----------------------------------------------------------------------------------------
+name: gastoseguro
+
+services:
+  db:
+    image: postgres:17-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24
+    env_file: ./deploy/db.env
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks: [backend]
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']
+      interval: 10s
+      timeout: 3s
+      retries: 10
+    security_opt: ['no-new-privileges:true']
+    restart: unless-stopped
+
+  # Aplica las migraciones con la imagen de compilación (la imagen final no incluye la CLI).
+  migrate:
+    build: { context: ., target: build }
+    working_dir: /app/backend
+    command: ['npx', 'prisma', 'migrate', 'deploy']
+    env_file: ./deploy/app.env
+    environment:
+      DB_PROVIDER: postgresql
+    depends_on:
+      db: { condition: service_healthy }
+    networks: [backend]
+    security_opt: ['no-new-privileges:true']
+    restart: 'no'
+
+  app:
+    build: { context: ., target: runtime }
+    env_file: ./deploy/app.env
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+    volumes:
+      - receipts:/app/backend/storage/receipts
+    read_only: true
+    tmpfs: ['/tmp:size=16m']
+    cap_drop: [ALL]
+    security_opt: ['no-new-privileges:true']
+    networks: [backend, frontend]
+    expose: ['4000']
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits: { cpus: '1.0', memory: 512M }
+
+  proxy:
+    image: caddy:2-alpine@sha256:d8542f48d34a9cf4e4c11a478865229840e87e4c96ea3f439101f31a5d35f75f
+    ports:
+      - '80:80'
+      - '443:443'
+    environment:
+      SITE_ADDRESS: ${SITE_ADDRESS:-gastoseguro.localhost}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on: [app]
+    networks: [frontend]
+    cap_drop: [ALL]
+    cap_add: [NET_BIND_SERVICE]
+    security_opt: ['no-new-privileges:true']
+    restart: unless-stopped
+
+networks:
+  # La base de datos solo es accesible desde la red interna (sin salida a Internet).
+  backend:
+    internal: true
+  frontend: {}
+
+volumes:
+  db-data:
+  receipts:
+  caddy-data:
+  caddy-config:

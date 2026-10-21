@@ -1,0 +1,235 @@
+{
+  "herramienta": "OWASP ZAP 2.17.0 (Automation Framework), Temurin JRE 21.0.12",
+  "objetivo": "Instancia local de GastoSeguro 1.0.0 (http://localhost:4100) sobre PostgreSQL 17.10",
+  "especificacion": "docs/openapi.json con identificadores reales de la instancia",
+  "usuario": {
+    "peticiones": 17901,
+    "rutasDistintas": 3208,
+    "estados": {
+      "200": 1131,
+      "201": 647,
+      "204": 1,
+      "301": 57,
+      "400": 6410,
+      "401": 228,
+      "403": 4372,
+      "404": 963,
+      "409": 216,
+      "415": 201,
+      "429": 3675
+    },
+    "2xx": 1779,
+    "4xx": 16065,
+    "errores5xx": 0,
+    "alto": 1,
+    "medio": 0,
+    "bajo": 1,
+    "informativas": 5,
+    "alertas": [
+      {
+        "regla": 6,
+        "alerta": "Path Traversal",
+        "riesgo": "High (Low)",
+        "instancias": 1,
+        "cwe": 22
+      },
+      {
+        "regla": 40014,
+        "alerta": "Cross Site Scripting Weakness (Persistent in JSON Response)",
+        "riesgo": "Low (Low)",
+        "instancias": 4,
+        "cwe": 79
+      },
+      {
+        "regla": 10111,
+        "alerta": "Authentication Request Identified",
+        "riesgo": "Informational (High)",
+        "instancias": 1,
+        "cwe": -1
+      },
+      {
+        "regla": 10024,
+        "alerta": "Information Disclosure - Sensitive Information in URL",
+        "riesgo": "Informational (Medium)",
+        "instancias": 1,
+        "cwe": 598
+      },
+      {
+        "regla": 10027,
+        "alerta": "Information Disclosure - Suspicious Comments",
+        "riesgo": "Informational (Low)",
+        "instancias": 1,
+        "cwe": 615
+      },
+      {
+        "regla": 10109,
+        "alerta": "Modern Web Application",
+        "riesgo": "Informational (Medium)",
+        "instancias": 4,
+        "cwe": -1
+      },
+      {
+        "regla": 10104,
+        "alerta": "User Agent Fuzzer",
+        "riesgo": "Informational (Medium)",
+        "instancias": 3,
+        "cwe": 0
+      }
+    ]
+  },
+  "admin": {
+    "peticiones": 17481,
+    "rutasDistintas": 3224,
+    "estados": {
+      "200": 957,
+      "201": 202,
+      "204": 1,
+      "301": 57,
+      "400": 10339,
+      "401": 228,
+      "403": 15,
+      "404": 1395,
+      "409": 124,
+      "415": 206,
+      "429": 3957
+    },
+    "2xx": 1160,
+    "4xx": 16264,
+    "errores5xx": 0,
+    "alto": 0,
+    "medio": 0,
+    "bajo": 1,
+    "informativas": 5,
+    "alertas": [
+      {
+        "regla": 40014,
+        "alerta": "Cross Site Scripting Weakness (Persistent in JSON Response)",
+        "riesgo": "Low (Low)",
+        "instancias": 1,
+        "cwe": 79
+      },
+      {
+        "regla": 10111,
+        "alerta": "Authentication Request Identified",
+        "riesgo": "Informational (High)",
+        "instancias": 1,
+        "cwe": -1
+      },
+      {
+        "regla": 10024,
+        "alerta": "Information Disclosure - Sensitive Information in URL",
+        "riesgo": "Informational (Medium)",
+        "instancias": 1,
+        "cwe": 598
+      },
+      {
+        "regla": 10027,
+        "alerta": "Information Disclosure - Suspicious Comments",
+        "riesgo": "Informational (Low)",
+        "instancias": 1,
+        "cwe": 615
+      },
+      {
+        "regla": 10109,
+        "alerta": "Modern Web Application",
+        "riesgo": "Informational (Medium)",
+        "instancias": 4,
+        "cwe": -1
+      },
+      {
+        "regla": 10104,
+        "alerta": "User Agent Fuzzer",
+        "riesgo": "Informational (Medium)",
+        "instancias": 3,
+        "cwe": 0
+      }
+    ]
+  },
+  "adminAntesDeCorregir": {
+    "peticiones": 17514,
+    "rutasDistintas": 3215,
+    "estados": {
+      "200": 971,
+      "201": 218,
+      "204": 1,
+      "301": 57,
+      "400": 10333,
+      "401": 234,
+      "403": 15,
+      "404": 1394,
+      "409": 127,
+      "415": 206,
+      "429": 3956,
+      "500": 2
+    },
+    "2xx": 1190,
+    "4xx": 16265,
+    "errores5xx": 2,
+    "errores": [
+      {
+        "hora": "2026-10-14T18:52:29.556Z",
+        "metodo": "GET",
+        "ruta": "/api/admin/users",
+        "estado": 500,
+        "tipo": "PrismaClientKnownRequestError",
+        "detalle": "Database error. Code: `22021`. Message: `invalid byte sequence for encoding \"UTF8\": 0x00`"
+      },
+      {
+        "hora": "2026-10-14T18:55:24.031Z",
+        "metodo": "GET",
+        "ruta": "/api/admin/users",
+        "estado": 500,
+        "tipo": "PrismaClientKnownRequestError",
+        "detalle": "Database error. Code: `22021`. Message: `invalid byte sequence for encoding \"UTF8\": 0x00`"
+      }
+    ],
+    "alto": 0,
+    "medio": 0,
+    "bajo": 1,
+    "informativas": 5,
+    "alertas": [
+      {
+        "regla": 40014,
+        "alerta": "Cross Site Scripting Weakness (Persistent in JSON Response)",
+        "riesgo": "Low (Low)",
+        "instancias": 1,
+        "cwe": 79
+      },
+      {
+        "regla": 10111,
+        "alerta": "Authentication Request Identified",
+        "riesgo": "Informational (High)",
+        "instancias": 1,
+        "cwe": -1
+      },
+      {
+        "regla": 10024,
+        "alerta": "Information Disclosure - Sensitive Information in URL",
+        "riesgo": "Informational (Medium)",
+        "instancias": 1,
+        "cwe": 598
+      },
+      {
+        "regla": 10027,
+        "alerta": "Information Disclosure - Suspicious Comments",
+        "riesgo": "Informational (Low)",
+        "instancias": 1,
+        "cwe": 615
+      },
+      {
+        "regla": 10109,
+        "alerta": "Modern Web Application",
+        "riesgo": "Informational (Medium)",
+        "instancias": 4,
+        "cwe": -1
+      },
+      {
+        "regla": 10104,
+        "alerta": "User Agent Fuzzer",
+        "riesgo": "Informational (Medium)",
+        "instancias": 3,
+        "cwe": 0
+      }
+    ]
+  }
+}

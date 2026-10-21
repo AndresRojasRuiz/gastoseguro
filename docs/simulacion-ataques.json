@@ -1,0 +1,27 @@
+{
+  "refresh": 200,
+  "reuse": 401,
+  "idor": [
+    404,
+    404,
+    404,
+    404,
+    404,
+    404,
+    404,
+    404,
+    404,
+    404
+  ],
+  "adminTry": 403,
+  "upload": 400,
+  "xss": {
+    "alta": 201,
+    "dialogos": 0,
+    "mostradoComoTexto": true
+  },
+  "tokenRobado": {
+    "vincularMfa": 400,
+    "cerrarSesiones": 400
+  }
+}

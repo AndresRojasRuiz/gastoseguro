@@ -1,0 +1,3 @@
+# Sin conversión de finales de línea: los ficheros se conservan byte a byte para que
+# el manifiesto SHA-256 de docs/evidencias siga verificándose tras clonar el repositorio.
+* -text

@@ -1,0 +1,120 @@
+
+ RUN  v5.0.4 C:/Users/andre/Documents/GastoSeguro/backend
+
+ ✓ tests/auth.test.ts > Registro > almacena la contraseña solo como hash Argon2id 320ms
+ ✓ tests/auth.test.ts > Registro > rechaza campos no previstos (asignación masiva de rol) 9ms
+ ✓ tests/auth.test.ts > Registro > rechaza contraseñas débiles con un mensaje explicativo 160ms
+ ✓ tests/auth.test.ts > Registro > responde igual si el correo ya existe (sin enumeración de cuentas) 456ms
+ ✓ tests/auth.test.ts > Inicio de sesión > emite un token de acceso y una cookie de refresco __Host-, HttpOnly, Secure y SameSite=Strict 313ms
+ ✓ tests/auth.test.ts > Inicio de sesión > usa el mismo mensaje para usuario inexistente y contraseña incorrecta 449ms
+ ✓ tests/auth.test.ts > Inicio de sesión > iguala el tiempo de respuesta con independencia de que la cuenta exista (CWE-208) 443ms
+ ✓ tests/auth.test.ts > Inicio de sesión > bloquea la cuenta tras 5 intentos fallidos, la audita y genera una alerta 1077ms
+ ✓ tests/auth.test.ts > Inicio de sesión > limita la tasa de intentos por IP y cuenta (HTTP 429) 1506ms
+ ✓ tests/auth.test.ts > Tokens de acceso (JWT) > rechaza peticiones sin token 10ms
+ ✓ tests/auth.test.ts > Tokens de acceso (JWT) > rechaza tokens con "alg: none" 456ms
+ ✓ tests/auth.test.ts > Tokens de acceso (JWT) > rechaza tokens con la carga útil manipulada 650ms
+ ✓ tests/auth.test.ts > Tokens de acceso (JWT) > rechaza tokens firmados con otra clave 398ms
+ ✓ tests/auth.test.ts > Tokens de acceso (JWT) > rechaza tokens caducados 306ms
+ ✓ tests/auth.test.ts > Tokens de acceso (JWT) > rechaza un JWT válido que no está tipado como token de acceso (at+jwt) 376ms
+ ✓ tests/auth.test.ts > Tokens de acceso (JWT) > deja de aceptar el token en cuanto la sesión se revoca o la cuenta se deshabilita 357ms
+ ✓ tests/auth.test.ts > Refresh tokens > rota el token en cada uso y detecta la reutilización revocando la sesión 444ms
+ ✓ tests/auth.test.ts > Refresh tokens > exige un Origin de confianza (defensa CSRF) 353ms
+ ✓ tests/auth.test.ts > Refresh tokens > el cierre de sesión revoca la sesión en el servidor 352ms
+ ✓ tests/auth.test.ts > Refresh tokens > caduca la sesión por inactividad 312ms
+ ✓ tests/auth.test.ts > Cambio de contraseña > exige la contraseña actual y revoca las demás sesiones 733ms
+ ✓ tests/privacy-sessions.test.ts > MFA obligatorio para roles privilegiados > un administrador o auditor sin segundo factor no ejerce su rol, pero sí accede a su cuenta 810ms
+ ✓ tests/privacy-sessions.test.ts > MFA obligatorio para roles privilegiados > con el segundo factor activado el rol privilegiado funciona 353ms
+ ✓ tests/privacy-sessions.test.ts > Cierre de sesiones > exige la contraseña para cerrar una sesión propia o las demás 1338ms
+ ✓ tests/privacy-sessions.test.ts > Cierre de sesiones > un administrador cierra las sesiones de un usuario o de toda la plataforma 1678ms
+ ✓ tests/privacy-sessions.test.ts > Sesiones simultáneas (ASVS 5.0, 7.1.2) > al superar el máximo de sesiones se cierran las más antiguas 999ms
+ ✓ tests/privacy-sessions.test.ts > Lista de contraseñas comunes > contiene al menos las 3000 contraseñas comunes que cumplen la política y las rechaza 224ms
+ ✓ tests/privacy-sessions.test.ts > Supresión de la cuenta (RGPD art. 17) > elimina la cuenta, sus datos y sus justificantes tras reautenticar 1003ms
+ ✓ tests/privacy-sessions.test.ts > Supresión de la cuenta (RGPD art. 17) > exige el código TOTP si el segundo factor está activo 529ms
+ ✓ tests/privacy-sessions.test.ts > Supresión de la cuenta (RGPD art. 17) > impide que el único administrador activo elimine su cuenta 367ms
+ ✓ tests/privacy-sessions.test.ts > Conservación de datos (RGPD art. 5.1.e) > purga los gastos borrados y las sesiones cerradas una vez vencido su plazo 674ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > trata la carga "' OR '1'='1" como texto literal en la búsqueda 597ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > trata la carga "1; DROP TABLE Expense; --" como texto literal en la búsqueda 361ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > trata la carga "%' UNION SELECT passwordHash FROM User --" como texto literal en la búsqueda 362ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > almacena el HTML como texto y responde siempre JSON (sin XSS reflejado) 393ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > rechaza caracteres de control en textos 334ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > rechaza el byte nulo en los parámetros de búsqueda (hallazgo del análisis dinámico) 652ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > rechaza importe negativo 351ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > rechaza importe con exponente 329ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > rechaza importe excesivo 338ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > rechaza fecha futura 352ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > rechaza fecha inválida 340ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > rechaza método de pago desconocido 351ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > rechaza campo no permitido 394ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > rechaza descripción demasiado larga 325ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > rechaza parámetros duplicados o anidados en la query (HPP / contaminación) 335ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > rechaza identificadores que no son UUID 318ms
+ ✓ tests/input-validation.test.ts > Gestión de condiciones excepcionales > un JSON malformado devuelve 400 sin trazas internas 11ms
+ ✓ tests/input-validation.test.ts > Gestión de condiciones excepcionales > un cuerpo demasiado grande devuelve 413 48ms
+ ✓ tests/input-validation.test.ts > Gestión de condiciones excepcionales > un tipo de contenido no admitido devuelve 415 10ms
+ ✓ tests/input-validation.test.ts > Gestión de condiciones excepcionales > las rutas inexistentes devuelven 404 en JSON 9ms
+ ✓ tests/access-control.test.ts > Control de acceso a nivel de objeto (IDOR / BOLA) > un usuario no puede leer, modificar ni borrar gastos de otro 982ms
+ ✓ tests/access-control.test.ts > Control de acceso a nivel de objeto (IDOR / BOLA) > los listados solo devuelven datos del propio usuario 634ms
+ ✓ tests/access-control.test.ts > Control de acceso a nivel de objeto (IDOR / BOLA) > no permite asociar un gasto a una categoría ajena 641ms
+ ✓ tests/access-control.test.ts > Control de acceso a nivel de objeto (IDOR / BOLA) > no permite revocar sesiones ni editar categorías de otro usuario 693ms
+ ✓ tests/access-control.test.ts > Control de acceso a nivel de objeto (IDOR / BOLA) > genera una alerta ante un sondeo repetido de identificadores 904ms
+ ✓ tests/access-control.test.ts > Control de acceso basado en roles (RBAC) > un usuario estándar no accede a administración ni auditoría 355ms
+ ✓ tests/access-control.test.ts > Control de acceso basado en roles (RBAC) > un auditor lee la auditoría pero no administra usuarios 380ms
+ ✓ tests/access-control.test.ts > Control de acceso basado en roles (RBAC) > el rol se lee del servidor: degradar a un administrador surte efecto inmediato 384ms
+ ✓ tests/access-control.test.ts > Control de acceso basado en roles (RBAC) > un administrador no puede modificar su propia cuenta ni dejar el sistema sin administradores 751ms
+ ✓ tests/access-control.test.ts > Control de acceso basado en roles (RBAC) > el panel de administración no expone hashes ni secretos 365ms
+ ✓ tests/mfa.test.ts > Segundo factor de autenticación (TOTP) > activa MFA, lo exige en el login y rechaza la reutilización de códigos 1359ms
+ ✓ tests/mfa.test.ts > Segundo factor de autenticación (TOTP) > invalida el desafío tras 5 códigos erróneos 1437ms
+ ✓ tests/files-reports.test.ts > Justificantes > acepta una imagen válida y la descarga como adjunto aislado 621ms
+ ✓ tests/files-reports.test.ts > Justificantes > rechaza un ejecutable o HTML disfrazado de PDF (validación por firma) 459ms
+ ✓ tests/files-reports.test.ts > Justificantes > rechaza ficheros que superan el tamaño máximo 406ms
+ ✓ tests/files-reports.test.ts > Exportación CSV > neutraliza fórmulas para evitar la inyección en hojas de cálculo 382ms
+ ✓ tests/logging-config.test.ts > Cabeceras de seguridad > envía una CSP estricta y el resto de cabeceras defensivas 41ms
+ ✓ tests/logging-config.test.ts > Cabeceras de seguridad > no revela la tecnología del servidor 6ms
+ ✓ tests/logging-config.test.ts > Cabeceras de seguridad > CORS solo autoriza los orígenes de la lista blanca 7ms
+ ✓ tests/logging-config.test.ts > Registro de auditoría encadenado > la cadena es íntegra tras la actividad normal 403ms
+ ✓ tests/logging-config.test.ts > Registro de auditoría encadenado > detecta la modificación de una entrada y genera una alerta crítica 386ms
+ ✓ tests/logging-config.test.ts > Registro de auditoría encadenado > detecta el borrado de una entrada intermedia 398ms
+ ✓ tests/logging-config.test.ts > Registro de auditoría encadenado > no registra secretos en la auditoría 307ms
+ ✓ tests/unit.test.ts > TOTP (RFC 6238, apéndice B) > T=59 produce el código 94287082 5ms
+ ✓ tests/unit.test.ts > TOTP (RFC 6238, apéndice B) > T=1111111109 produce el código 07081804 0ms
+ ✓ tests/unit.test.ts > TOTP (RFC 6238, apéndice B) > T=1111111111 produce el código 14050471 0ms
+ ✓ tests/unit.test.ts > TOTP (RFC 6238, apéndice B) > T=1234567890 produce el código 89005924 0ms
+ ✓ tests/unit.test.ts > TOTP (RFC 6238, apéndice B) > T=2000000000 produce el código 69279037 0ms
+ ✓ tests/unit.test.ts > TOTP (RFC 6238, apéndice B) > T=20000000000 produce el código 65353130 0ms
+ ✓ tests/unit.test.ts > TOTP (RFC 6238, apéndice B) > codifica y decodifica base32 sin pérdida 1ms
+ ✓ tests/unit.test.ts > TOTP (RFC 6238, apéndice B) > acepta el código actual y rechaza su reutilización 1ms
+ ✓ tests/unit.test.ts > Cifrado AES-256-GCM > descifra correctamente con los mismos datos asociados 1ms
+ ✓ tests/unit.test.ts > Cifrado AES-256-GCM > produce textos cifrados distintos para el mismo mensaje (IV aleatorio) 1ms
+ ✓ tests/unit.test.ts > Cifrado AES-256-GCM > detecta la manipulación del texto cifrado 1ms
+ ✓ tests/unit.test.ts > Cifrado AES-256-GCM > impide reutilizar el secreto de un usuario en otro (AAD) 0ms
+ ✓ tests/unit.test.ts > Cifrado AES-256-GCM > compara en tiempo constante 0ms
+ ✓ tests/unit.test.ts > Contraseñas > genera hashes Argon2id con sal y los verifica 117ms
+ ✓ tests/unit.test.ts > Contraseñas > un hash corrupto nunca valida (fallo seguro) 0ms
+ ✓ tests/unit.test.ts > Contraseñas > aplica la política NIST/ASVS 3ms
+ ✓ tests/unit.test.ts > Importes > convierte a unidades menores sin coma flotante 1ms
+ ✓ tests/unit.test.ts > Importes > rechaza el importe "-5" 0ms
+ ✓ tests/unit.test.ts > Importes > rechaza el importe "0" 0ms
+ ✓ tests/unit.test.ts > Importes > rechaza el importe "1e3" 0ms
+ ✓ tests/unit.test.ts > Importes > rechaza el importe "12.345" 0ms
+ ✓ tests/unit.test.ts > Importes > rechaza el importe "abc" 0ms
+ ✓ tests/unit.test.ts > Importes > rechaza el importe "99999999999" 0ms
+ ✓ tests/unit.test.ts > Importes > rechaza el importe " " 0ms
+ ✓ tests/unit.test.ts > Importes > rechaza el importe "1.5.2" 0ms
+ ✓ tests/unit.test.ts > Importes > rechaza decimales en monedas sin decimales 0ms
+ ✓ tests/unit.test.ts > Saneamiento de salidas y ficheros > neutraliza la fórmula "=HYPERLINK(\"http://x\")" en CSV 0ms
+ ✓ tests/unit.test.ts > Saneamiento de salidas y ficheros > neutraliza la fórmula "+1+1" en CSV 0ms
+ ✓ tests/unit.test.ts > Saneamiento de salidas y ficheros > neutraliza la fórmula "-2+3" en CSV 0ms
+ ✓ tests/unit.test.ts > Saneamiento de salidas y ficheros > neutraliza la fórmula "@SUM(A1)" en CSV 0ms
+ ✓ tests/unit.test.ts > Saneamiento de salidas y ficheros > neutraliza la fórmula "\t=1" en CSV 0ms
+ ✓ tests/unit.test.ts > Saneamiento de salidas y ficheros > neutraliza la fórmula "\r=1" en CSV 0ms
+ ✓ tests/unit.test.ts > Saneamiento de salidas y ficheros > duplica las comillas internas en CSV 0ms
+ ✓ tests/unit.test.ts > Saneamiento de salidas y ficheros > identifica el tipo real por la firma del fichero 0ms
+ ✓ tests/unit.test.ts > Saneamiento de salidas y ficheros > elimina rutas y caracteres peligrosos del nombre original 1ms
+ ✓ tests/unit.test.ts > Saneamiento de salidas y ficheros > impide resolver rutas fuera del directorio de almacenamiento 1ms
+
+ Test Files  8 passed (8)
+      Tests  110 passed (110)
+   Start at  15:58:36
+   Duration  48.67s (tests 84%, import 15%, transform 1%)
+
+JSON report written to C:/Users/andre/Documents/GastoSeguro/docs/evidencias/pruebas-vitest.json

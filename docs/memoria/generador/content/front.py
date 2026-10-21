@@ -1,0 +1,67 @@
+# -*- coding: utf-8 -*-
+from .dsl import BOX, P, PB, T, UL
+
+COVER = {
+    'title': 'GastoSeguro: aplicación web de registro de gastos segura por diseño conforme a OWASP Top 10:2025',
+    'authors': 'Paul Ormazabal, Andrés Rojas y José Ruz',
+    'header_authors': 'Paul Ormazabal, Andrés Rojas y José Ruz',
+    'header_title': 'GastoSeguro: aplicación web de registro de gastos segura por diseño conforme a OWASP Top 10:2025',
+    'type': 'Tipo 2. Desarrollo de software',
+    'director': '[Nombre y apellidos del director/a]',
+    'date': '[Fecha de entrega]',
+    'date_placeholder': True,
+}
+
+FRONT = [
+    ('idx', 'Resumen'),
+    P('Este Trabajo Fin de Estudios aborda el desarrollo de software seguro en un dominio que trata datos personales y financieros: el registro de gastos. Su objetivo es diseñar, implementar y verificar GastoSeguro, una aplicación web cuya seguridad se incorpora desde el diseño tomando como referencia el OWASP Top 10:2025 y los requisitos de OWASP ASVS 5.0. Se siguió un ciclo de vida de desarrollo seguro alineado con NIST SSDF, con modelado de amenazas STRIDE y una matriz de riesgos, controles para las diez categorías de riesgo y una verificación basada en 110 pruebas automatizadas, ejecutadas sobre SQLite y PostgreSQL, análisis estático y de dependencias, un análisis dinámico autenticado con OWASP ZAP y la simulación de casos de abuso. Los casos de abuso simulados fueron bloqueados y registrados, y el análisis dinámico no confirmó ninguna vulnerabilidad. La evaluación descubrió además un canal lateral de temporización que permitía enumerar cuentas con un 78,5 % de acierto, reducido al 53,0 % tras su corrección. Los resultados deben interpretarse con sus limitaciones: la verificación se realizó en un entorno local, el canal de integración continua (incluido CodeQL) y el despliegue con contenedores no se han ejecutado, no ha habido una auditoría externa y la usabilidad no se ha validado con usuarios. El resultado es una aplicación funcional y una metodología reproducible.'),
+    P('**Palabras clave:** desarrollo seguro, OWASP Top 10, seguridad de aplicaciones web, DevSecOps, gestión de gastos.'),
+    ('idx', 'Abstract'),
+    P('This group Master’s thesis addresses secure software development in a domain that handles personal and financial data: expense tracking. Its goal is to design, implement and verify GastoSeguro, a web application whose security is built in by design using the OWASP Top 10:2025 and the OWASP ASVS 5.0 requirements as reference frameworks. A secure development life cycle aligned with NIST SSDF was followed, including STRIDE threat modelling with a risk matrix, controls for the ten risk categories and a verification strategy based on 110 automated tests run on SQLite and PostgreSQL, static and dependency analysis, an authenticated dynamic scan with OWASP ZAP and the simulation of abuse cases. The simulated abuse cases were blocked and logged, and the dynamic scan did not confirm any vulnerability. The evaluation also uncovered a timing side channel that allowed account enumeration with 78.5 % accuracy, reduced to 53.0 % after the fix. These results should be read with their limitations in mind: verification was carried out in a local environment, the continuous integration pipeline (including CodeQL) and the container deployment have not been executed, there has been no external audit and usability has not been validated with users. The outcome is a working application and a reproducible methodology.'),
+    P('**Keywords:** secure development, OWASP Top 10, web application security, DevSecOps, expense tracking.'),
+    ('idx', 'Índice de contenidos'),
+    ('raw', 'TOC_CONTENTS'),
+    ('idx', 'Índice de figuras'),
+    ('raw', 'TOC_FIGURES'),
+    ('idx', 'Índice de tablas'),
+    ('raw', 'TOC_TABLES'),
+
+    ('idx', 'Organización del trabajo en grupo'),
+    P('Este apartado describe cómo se ha repartido el trabajo entre los tres integrantes del grupo, qué objetivos persigue cada parte y qué mecanismos de coordinación se han empleado para integrar las contribuciones en un único producto y en una única memoria.'),
+    ('idxsub', 'Partes que aborda el TFE, distribución y estructura de la memoria'),
+    P('El TFE desarrolla GastoSeguro, una aplicación web de registro de gastos personales construida con seguridad por diseño. El proyecto se ha dividido en una parte común, que comprende el análisis del problema, los requisitos, el modelado de amenazas, la arquitectura y la evaluación global, y en tres partes individuales. Cada parte individual se corresponde con un conjunto coherente de categorías del OWASP Top 10:2025 y tiene entidad suficiente para constituir por sí misma un TFE:'),
+    UL(
+        '**Parte individual 1 (Paul Ormazabal): autenticación, gestión de sesiones y criptografía** (A04 y A07). Abarca el almacenamiento de contraseñas con Argon2id, la política de credenciales, la protección frente a fuerza bruta y enumeración, el segundo factor TOTP, el ciclo de vida de los tokens y la gestión de secretos.',
+        '**Parte individual 2 (Andrés Rojas): control de acceso, validación de entradas y diseño seguro** (A01, A05 y A06). Abarca el modelo de autorización por roles y por propiedad del objeto, la prevención de IDOR, la validación de entradas, la prevención de inyecciones, la gestión segura de ficheros, las reglas de negocio y la seguridad en el cliente.',
+        '**Parte individual 3 (José Ruz): configuración segura, cadena de suministro, registro y gestión de errores** (A02, A03, A08, A09 y A10). Abarca las cabeceras y la configuración endurecida, la gestión de dependencias y el SBOM, el registro de auditoría a prueba de manipulaciones, la detección y alerta, la gestión de condiciones excepcionales y el canal de integración y despliegue continuos.',
+    ),
+    P('La {tab:reparto} refleja el reparto de responsabilidades en la confección de la memoria.'),
+    T('reparto', 'Organización del trabajo en grupo.',
+      ['Apartado de la memoria', 'Responsables'],
+      [
+          ['1. Introducción', 'Paul Ormazabal, Andrés Rojas y José Ruz'],
+          ['2. Estado del arte', 'Paul Ormazabal, Andrés Rojas y José Ruz'],
+          ['3. Objetivos concretos y metodología de trabajo', 'Paul Ormazabal, Andrés Rojas y José Ruz'],
+          ['4.1. Identificación de requisitos y modelado de amenazas', 'Paul Ormazabal, Andrés Rojas y José Ruz'],
+          ['4.2. Descripción de la herramienta: arquitectura común', 'Paul Ormazabal, Andrés Rojas y José Ruz'],
+          ['4.3. Parte individual 1: autenticación, sesiones y criptografía', 'Paul Ormazabal'],
+          ['4.4. Parte individual 2: control de acceso, entradas y diseño seguro', 'Andrés Rojas'],
+          ['4.5. Parte individual 3: configuración, cadena de suministro, registro y errores', 'José Ruz'],
+          ['4.6. Evaluación (parte 4)', 'Paul Ormazabal, Andrés Rojas y José Ruz'],
+          ['5. Conclusiones y trabajo futuro', 'Paul Ormazabal, Andrés Rojas y José Ruz'],
+      ],
+      widths=[64, 36]),
+    ('idxsub', 'Objetivo del TFE desde el punto de vista de la adquisición de conocimientos'),
+    P('Desde el punto de vista de la adquisición de conocimientos, este TFE incorpora tres segmentos claramente diferenciados que, por sí mismos, podrían haber sido objeto de una propuesta individual: la ingeniería de la identidad digital y la criptografía aplicada, el control de acceso y la defensa frente a la inyección, y la seguridad operacional y de la cadena de suministro. Cada integrante ha profundizado en uno de ellos, desde la normativa y la literatura técnica hasta la implementación y la verificación empírica de los controles.'),
+    P('El carácter grupal aporta una visión holística que no se obtendría con trabajos aislados: los controles de cada parte dependen unos de otros (por ejemplo, la detección de accesos indebidos de la parte 2 alimenta el sistema de alertas de la parte 3, y la revocación inmediata de sesiones de la parte 1 es la respuesta a esas alertas). El resultado es un producto utilizable profesionalmente y una forma de trabajar que reproduce la de un equipo real de desarrollo seguro, en el que la seguridad es una responsabilidad compartida.'),
+    ('idxsub', 'Mecanismos de coordinación empleados'),
+    PB('La coordinación del grupo se ha apoyado en prácticas habituales de los equipos de ingeniería de software, que además refuerzan la seguridad del propio proceso de desarrollo:'),
+    UL(
+        '**Repositorio Git común** con una rama por parte individual e integración mediante solicitudes de cambio (*pull requests*). Ningún cambio se integra sin la revisión de, al menos, otro integrante, lo que convierte la revisión de código en una revisión de seguridad por pares.',
+        '**Canal de integración continua** como criterio objetivo de calidad: cada solicitud de cambio debe superar la auditoría de dependencias, el análisis estático, la comprobación de tipos y la batería de pruebas antes de integrarse.',
+        '**Tablero de tareas** (Kanban) con las historias de usuario, los requisitos de seguridad y las amenazas identificadas, de modo que cada amenaza del modelo STRIDE tiene asociada una tarea de mitigación y una prueba.',
+        '**Reuniones semanales de seguimiento** por videoconferencia y un canal de mensajería para las dudas del día a día. En las reuniones se revisaba el avance, se acordaban las interfaces entre partes y se documentaban las decisiones de arquitectura relevantes.',
+        '**Documento compartido de la memoria** con control de cambios y comentarios, y una guía de estilo común (terminología, formato de citas APA y nomenclatura de figuras y tablas).',
+    ),
+    BOX('Nota para el grupo: revisad este apartado y adaptadlo a las herramientas, la frecuencia de reuniones y los acuerdos que hayáis utilizado realmente antes de entregarlo al director.'),
+]

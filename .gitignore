@@ -1,0 +1,21 @@
+# Dependencias y compilados
+node_modules/
+dist/
+coverage/
+backend/src/generated/
+
+# Secretos y configuración local (NUNCA versionar)
+.env
+.env.*
+!.env.example
+deploy/*.env
+
+# Datos locales
+backend/data/
+backend/storage/
+
+# Registros y temporales
+*.log
+.DS_Store
+Thumbs.db
+~$*

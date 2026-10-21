@@ -1,0 +1,44 @@
+[
+  {
+    "escenario": "Sin igualación de tiempos",
+    "AUTH_MIN_RESPONSE_MS": 0,
+    "usuarioExistente": {
+      "n": 200,
+      "media": 74.3,
+      "desviacion": 5.2,
+      "p50": 73.2,
+      "p95": 83.8
+    },
+    "usuarioInexistente": {
+      "n": 200,
+      "media": 68.1,
+      "desviacion": 4.6,
+      "p50": 68.1,
+      "p95": 73.5
+    },
+    "diferenciaMedias": 6.2,
+    "diferenciaMedianas": 5.1,
+    "exactitudMejorUmbral": 78.5
+  },
+  {
+    "escenario": "Con igualación de tiempos",
+    "AUTH_MIN_RESPONSE_MS": 400,
+    "usuarioExistente": {
+      "n": 200,
+      "media": 423.3,
+      "desviacion": 8.1,
+      "p50": 428.4,
+      "p95": 432.4
+    },
+    "usuarioInexistente": {
+      "n": 200,
+      "media": 423.2,
+      "desviacion": 7.9,
+      "p50": 427.7,
+      "p95": 432.4
+    },
+    "diferenciaMedias": 0.1,
+    "diferenciaMedianas": 0.7,
+    "exactitudMejorUmbral": 53
+  }
+]

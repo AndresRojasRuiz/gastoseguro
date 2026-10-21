@@ -1,0 +1,155 @@
+# Batería de pruebas contra PostgreSQL 17.10 (local, puerto 5433) — 2026-10-14 15:58 -0300
+# Comando: TEST_DATABASE_URL=postgresql://postgres:***@localhost:5433/gastoseguro_test3 npm run test:postgres -w backend -- --reporter=verbose
+
+
+> @gastoseguro/backend@1.0.0 test:postgres
+> node scripts/test-postgres.mjs --reporter=verbose
+
+Loaded Prisma config from prisma.config.ts.
+
+Prisma schema loaded from prisma\postgres\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\src\generated\prisma in 242ms
+
+
+ RUN  v5.0.4 C:/Users/andre/Documents/GastoSeguro/backend
+
+ ✓ tests/auth.test.ts > Registro > almacena la contraseña solo como hash Argon2id 322ms
+ ✓ tests/auth.test.ts > Registro > rechaza campos no previstos (asignación masiva de rol) 7ms
+ ✓ tests/auth.test.ts > Registro > rechaza contraseñas débiles con un mensaje explicativo 162ms
+ ✓ tests/auth.test.ts > Registro > responde igual si el correo ya existe (sin enumeración de cuentas) 422ms
+ ✓ tests/auth.test.ts > Inicio de sesión > emite un token de acceso y una cookie de refresco __Host-, HttpOnly, Secure y SameSite=Strict 334ms
+ ✓ tests/auth.test.ts > Inicio de sesión > usa el mismo mensaje para usuario inexistente y contraseña incorrecta 443ms
+ ✓ tests/auth.test.ts > Inicio de sesión > iguala el tiempo de respuesta con independencia de que la cuenta exista (CWE-208) 453ms
+ ✓ tests/auth.test.ts > Inicio de sesión > bloquea la cuenta tras 5 intentos fallidos, la audita y genera una alerta 1256ms
+ ✓ tests/auth.test.ts > Inicio de sesión > limita la tasa de intentos por IP y cuenta (HTTP 429) 1504ms
+ ✓ tests/auth.test.ts > Tokens de acceso (JWT) > rechaza peticiones sin token 12ms
+ ✓ tests/auth.test.ts > Tokens de acceso (JWT) > rechaza tokens con "alg: none" 311ms
+ ✓ tests/auth.test.ts > Tokens de acceso (JWT) > rechaza tokens con la carga útil manipulada 709ms
+ ✓ tests/auth.test.ts > Tokens de acceso (JWT) > rechaza tokens firmados con otra clave 481ms
+ ✓ tests/auth.test.ts > Tokens de acceso (JWT) > rechaza tokens caducados 513ms
+ ✓ tests/auth.test.ts > Tokens de acceso (JWT) > rechaza un JWT válido que no está tipado como token de acceso (at+jwt) 308ms
+ ✓ tests/auth.test.ts > Tokens de acceso (JWT) > deja de aceptar el token en cuanto la sesión se revoca o la cuenta se deshabilita 426ms
+ ✓ tests/auth.test.ts > Refresh tokens > rota el token en cada uso y detecta la reutilización revocando la sesión 354ms
+ ✓ tests/auth.test.ts > Refresh tokens > exige un Origin de confianza (defensa CSRF) 298ms
+ ✓ tests/auth.test.ts > Refresh tokens > el cierre de sesión revoca la sesión en el servidor 387ms
+ ✓ tests/auth.test.ts > Refresh tokens > caduca la sesión por inactividad 382ms
+ ✓ tests/auth.test.ts > Cambio de contraseña > exige la contraseña actual y revoca las demás sesiones 676ms
+ ✓ tests/privacy-sessions.test.ts > MFA obligatorio para roles privilegiados > un administrador o auditor sin segundo factor no ejerce su rol, pero sí accede a su cuenta 808ms
+ ✓ tests/privacy-sessions.test.ts > MFA obligatorio para roles privilegiados > con el segundo factor activado el rol privilegiado funciona 383ms
+ ✓ tests/privacy-sessions.test.ts > Cierre de sesiones > exige la contraseña para cerrar una sesión propia o las demás 1081ms
+ ✓ tests/privacy-sessions.test.ts > Cierre de sesiones > un administrador cierra las sesiones de un usuario o de toda la plataforma 1441ms
+ ✓ tests/privacy-sessions.test.ts > Sesiones simultáneas (ASVS 5.0, 7.1.2) > al superar el máximo de sesiones se cierran las más antiguas 1115ms
+ ✓ tests/privacy-sessions.test.ts > Lista de contraseñas comunes > contiene al menos las 3000 contraseñas comunes que cumplen la política y las rechaza 231ms
+ ✓ tests/privacy-sessions.test.ts > Supresión de la cuenta (RGPD art. 17) > elimina la cuenta, sus datos y sus justificantes tras reautenticar 991ms
+ ✓ tests/privacy-sessions.test.ts > Supresión de la cuenta (RGPD art. 17) > exige el código TOTP si el segundo factor está activo 470ms
+ ✓ tests/privacy-sessions.test.ts > Supresión de la cuenta (RGPD art. 17) > impide que el único administrador activo elimine su cuenta 377ms
+ ✓ tests/privacy-sessions.test.ts > Conservación de datos (RGPD art. 5.1.e) > purga los gastos borrados y las sesiones cerradas una vez vencido su plazo 769ms
+ ✓ tests/access-control.test.ts > Control de acceso a nivel de objeto (IDOR / BOLA) > un usuario no puede leer, modificar ni borrar gastos de otro 1154ms
+ ✓ tests/access-control.test.ts > Control de acceso a nivel de objeto (IDOR / BOLA) > los listados solo devuelven datos del propio usuario 1020ms
+ ✓ tests/access-control.test.ts > Control de acceso a nivel de objeto (IDOR / BOLA) > no permite asociar un gasto a una categoría ajena 614ms
+ ✓ tests/access-control.test.ts > Control de acceso a nivel de objeto (IDOR / BOLA) > no permite revocar sesiones ni editar categorías de otro usuario 697ms
+ ✓ tests/access-control.test.ts > Control de acceso a nivel de objeto (IDOR / BOLA) > genera una alerta ante un sondeo repetido de identificadores 863ms
+ ✓ tests/access-control.test.ts > Control de acceso basado en roles (RBAC) > un usuario estándar no accede a administración ni auditoría 376ms
+ ✓ tests/access-control.test.ts > Control de acceso basado en roles (RBAC) > un auditor lee la auditoría pero no administra usuarios 376ms
+ ✓ tests/access-control.test.ts > Control de acceso basado en roles (RBAC) > el rol se lee del servidor: degradar a un administrador surte efecto inmediato 383ms
+ ✓ tests/access-control.test.ts > Control de acceso basado en roles (RBAC) > un administrador no puede modificar su propia cuenta ni dejar el sistema sin administradores 636ms
+ ✓ tests/access-control.test.ts > Control de acceso basado en roles (RBAC) > el panel de administración no expone hashes ni secretos 307ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > trata la carga "' OR '1'='1" como texto literal en la búsqueda 768ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > trata la carga "1; DROP TABLE Expense; --" como texto literal en la búsqueda 370ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > trata la carga "%' UNION SELECT passwordHash FROM User --" como texto literal en la búsqueda 378ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > almacena el HTML como texto y responde siempre JSON (sin XSS reflejado) 427ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > rechaza caracteres de control en textos 329ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > rechaza el byte nulo en los parámetros de búsqueda (hallazgo del análisis dinámico) 756ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > rechaza importe negativo 334ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > rechaza importe con exponente 333ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > rechaza importe excesivo 307ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > rechaza fecha futura 352ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > rechaza fecha inválida 319ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > rechaza método de pago desconocido 521ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > rechaza campo no permitido 351ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > rechaza descripción demasiado larga 324ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > rechaza parámetros duplicados o anidados en la query (HPP / contaminación) 442ms
+ ✓ tests/input-validation.test.ts > Inyección y validación de entradas > rechaza identificadores que no son UUID 304ms
+ ✓ tests/input-validation.test.ts > Gestión de condiciones excepcionales > un JSON malformado devuelve 400 sin trazas internas 18ms
+ ✓ tests/input-validation.test.ts > Gestión de condiciones excepcionales > un cuerpo demasiado grande devuelve 413 21ms
+ ✓ tests/input-validation.test.ts > Gestión de condiciones excepcionales > un tipo de contenido no admitido devuelve 415 9ms
+ ✓ tests/input-validation.test.ts > Gestión de condiciones excepcionales > las rutas inexistentes devuelven 404 en JSON 12ms
+ ✓ tests/mfa.test.ts > Segundo factor de autenticación (TOTP) > activa MFA, lo exige en el login y rechaza la reutilización de códigos 1490ms
+ ✓ tests/mfa.test.ts > Segundo factor de autenticación (TOTP) > invalida el desafío tras 5 códigos erróneos 1541ms
+ ✓ tests/files-reports.test.ts > Justificantes > acepta una imagen válida y la descarga como adjunto aislado 919ms
+ ✓ tests/files-reports.test.ts > Justificantes > rechaza un ejecutable o HTML disfrazado de PDF (validación por firma) 451ms
+ ✓ tests/files-reports.test.ts > Justificantes > rechaza ficheros que superan el tamaño máximo 340ms
+ ✓ tests/files-reports.test.ts > Exportación CSV > neutraliza fórmulas para evitar la inyección en hojas de cálculo 382ms
+ ✓ tests/logging-config.test.ts > Cabeceras de seguridad > envía una CSP estricta y el resto de cabeceras defensivas 49ms
+ ✓ tests/logging-config.test.ts > Cabeceras de seguridad > no revela la tecnología del servidor 10ms
+ ✓ tests/logging-config.test.ts > Cabeceras de seguridad > CORS solo autoriza los orígenes de la lista blanca 13ms
+ ✓ tests/logging-config.test.ts > Registro de auditoría encadenado > la cadena es íntegra tras la actividad normal 495ms
+ ✓ tests/logging-config.test.ts > Registro de auditoría encadenado > detecta la modificación de una entrada y genera una alerta crítica 356ms
+ ✓ tests/logging-config.test.ts > Registro de auditoría encadenado > detecta el borrado de una entrada intermedia 397ms
+ ✓ tests/logging-config.test.ts > Registro de auditoría encadenado > no registra secretos en la auditoría 288ms
+ ✓ tests/unit.test.ts > TOTP (RFC 6238, apéndice B) > T=59 produce el código 94287082 4ms
+ ✓ tests/unit.test.ts > TOTP (RFC 6238, apéndice B) > T=1111111109 produce el código 07081804 0ms
+ ✓ tests/unit.test.ts > TOTP (RFC 6238, apéndice B) > T=1111111111 produce el código 14050471 0ms
+ ✓ tests/unit.test.ts > TOTP (RFC 6238, apéndice B) > T=1234567890 produce el código 89005924 0ms
+ ✓ tests/unit.test.ts > TOTP (RFC 6238, apéndice B) > T=2000000000 produce el código 69279037 0ms
+ ✓ tests/unit.test.ts > TOTP (RFC 6238, apéndice B) > T=20000000000 produce el código 65353130 0ms
+ ✓ tests/unit.test.ts > TOTP (RFC 6238, apéndice B) > codifica y decodifica base32 sin pérdida 1ms
+ ✓ tests/unit.test.ts > TOTP (RFC 6238, apéndice B) > acepta el código actual y rechaza su reutilización 1ms
+ ✓ tests/unit.test.ts > Cifrado AES-256-GCM > descifra correctamente con los mismos datos asociados 1ms
+ ✓ tests/unit.test.ts > Cifrado AES-256-GCM > produce textos cifrados distintos para el mismo mensaje (IV aleatorio) 1ms
+ ✓ tests/unit.test.ts > Cifrado AES-256-GCM > detecta la manipulación del texto cifrado 2ms
+ ✓ tests/unit.test.ts > Cifrado AES-256-GCM > impide reutilizar el secreto de un usuario en otro (AAD) 1ms
+ ✓ tests/unit.test.ts > Cifrado AES-256-GCM > compara en tiempo constante 0ms
+ ✓ tests/unit.test.ts > Contraseñas > genera hashes Argon2id con sal y los verifica 87ms
+ ✓ tests/unit.test.ts > Contraseñas > un hash corrupto nunca valida (fallo seguro) 2ms
+ ✓ tests/unit.test.ts > Contraseñas > aplica la política NIST/ASVS 2ms
+ ✓ tests/unit.test.ts > Importes > convierte a unidades menores sin coma flotante 1ms
+ ✓ tests/unit.test.ts > Importes > rechaza el importe "-5" 0ms
+ ✓ tests/unit.test.ts > Importes > rechaza el importe "0" 0ms
+ ✓ tests/unit.test.ts > Importes > rechaza el importe "1e3" 0ms
+ ✓ tests/unit.test.ts > Importes > rechaza el importe "12.345" 0ms
+ ✓ tests/unit.test.ts > Importes > rechaza el importe "abc" 0ms
+ ✓ tests/unit.test.ts > Importes > rechaza el importe "99999999999" 0ms
+ ✓ tests/unit.test.ts > Importes > rechaza el importe " " 0ms
+ ✓ tests/unit.test.ts > Importes > rechaza el importe "1.5.2" 0ms
+ ✓ tests/unit.test.ts > Importes > rechaza decimales en monedas sin decimales 0ms
+ ✓ tests/unit.test.ts > Saneamiento de salidas y ficheros > neutraliza la fórmula "=HYPERLINK(\"http://x\")" en CSV 0ms
+ ✓ tests/unit.test.ts > Saneamiento de salidas y ficheros > neutraliza la fórmula "+1+1" en CSV 0ms
+ ✓ tests/unit.test.ts > Saneamiento de salidas y ficheros > neutraliza la fórmula "-2+3" en CSV 0ms
+ ✓ tests/unit.test.ts > Saneamiento de salidas y ficheros > neutraliza la fórmula "@SUM(A1)" en CSV 0ms
+ ✓ tests/unit.test.ts > Saneamiento de salidas y ficheros > neutraliza la fórmula "\t=1" en CSV 0ms
+ ✓ tests/unit.test.ts > Saneamiento de salidas y ficheros > neutraliza la fórmula "\r=1" en CSV 0ms
+ ✓ tests/unit.test.ts > Saneamiento de salidas y ficheros > duplica las comillas internas en CSV 0ms
+ ✓ tests/unit.test.ts > Saneamiento de salidas y ficheros > identifica el tipo real por la firma del fichero 0ms
+ ✓ tests/unit.test.ts > Saneamiento de salidas y ficheros > elimina rutas y caracteres peligrosos del nombre original 1ms
+ ✓ tests/unit.test.ts > Saneamiento de salidas y ficheros > impide resolver rutas fuera del directorio de almacenamiento 0ms
+
+ Test Files  8 passed (8)
+      Tests  110 passed (110)
+   Start at  15:57:30
+   Duration  51.23s (tests 83%, import 16%, transform 1%)
+
+Loaded Prisma config from prisma.config.ts.
+
+Prisma schema loaded from prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.0) to .\src\generated\prisma in 128ms
+
+
+# Comprobación posterior del contenido de la base de datos PostgreSQL
+{
+  "server": "17.10",
+  "migrations": [
+    {
+      "migration_name": "20261014000000_init",
+      "ok": true
+    }
+  ],
+  "User": 73,
+  "Session": 74,
+  "Expense": 13,
+  "Receipt": 1,
+  "AuditLog": 266,
+  "SecurityAlert": 8
+}

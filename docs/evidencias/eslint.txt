@@ -1,0 +1,1 @@
+0 problemas (ESLint v10.12.0)

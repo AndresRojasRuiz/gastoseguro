@@ -1,0 +1,8 @@
+# Hallazgo del análisis dinámico (perfil administrador, primera ejecución)
+# Errores 500 registrados por la API (extracto del registro técnico; el cliente solo recibió un mensaje genérico con requestId)
+2026-10-14T18:52:29.556Z  GET /api/admin/users  500  PrismaClientKnownRequestError  Database error. Code: `22021`. Message: `invalid byte sequence for encoding "UTF8": 0x00`
+2026-10-14T18:55:24.031Z  GET /api/admin/users  500  PrismaClientKnownRequestError  Database error. Code: `22021`. Message: `invalid byte sequence for encoding "UTF8": 0x00`
+
+# Causa: byte nulo (%00) en el parámetro de búsqueda "q"; PostgreSQL lo rechaza (código 22021) y SQLite lo acepta.
+# Corrección: esquema searchText (backend/src/schemas/common.ts) que rechaza caracteres de control con 400,
+# prueba de regresión en tests/input-validation.test.ts y nuevo escaneo completo sin errores 5xx (resumen.json).

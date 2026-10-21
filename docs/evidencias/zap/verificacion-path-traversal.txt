@@ -1,0 +1,5 @@
+201 "../../../../etc/passwd" -> {"id":"dec40018-8994-4276-a926-be4b22b759ee","name":"../../../../etc/passwd","color":"#123456"}
+201 "..\\..\\..\\windows\\win.ini" -> {"id":"6a7a8da6-4c40-4c87-82f8-2d6a686d4601","name":"..\\..\\..\\windows\\win.ini","color":"#123456"}
+201 "categories" -> {"id":"bac70892-1601-49ff-b0eb-fc37ad699c14","name":"categories","color":"#123456"}
+201 "file:///etc/passwd" -> {"id":"9d1b9a9b-8a51-42ce-a9d8-ff4518d7d6a3","name":"file:///etc/passwd","color":"#123456"}
+Nombres almacenados: ["../../../../etc/passwd","..\\..\\..\\windows\\win.ini","Alimentación","Educación","Ocio","Otros","Salud","Transporte","Vivienda","categories","file:///etc/passwd"]

@@ -1,0 +1,123 @@
+{
+  "entorno": {
+    "cpu": "13th Gen Intel(R) Core(TM) i7-1360P",
+    "nucleos": 16,
+    "memoriaGB": 15.6,
+    "so": "Windows_NT 10.0.26200",
+    "node": "v26.2.0",
+    "baseDatos": "PostgreSQL 17.10 (local)"
+  },
+  "argon2": [
+    {
+      "nombre": "OWASP mínimo (m=19 MiB, t=2, p=1) [usado]",
+      "memoryCost": 19456,
+      "timeCost": 2,
+      "parallelism": 1,
+      "hash": {
+        "n": 13,
+        "media": 22.3,
+        "p50": 18.9,
+        "p95": 44.9,
+        "max": 44.9
+      },
+      "verify": {
+        "n": 13,
+        "media": 20.1,
+        "p50": 18.3,
+        "p95": 30.3,
+        "max": 30.3
+      }
+    },
+    {
+      "nombre": "Alternativa OWASP (m=46 MiB, t=1, p=1)",
+      "memoryCost": 47104,
+      "timeCost": 1,
+      "parallelism": 1,
+      "hash": {
+        "n": 13,
+        "media": 32.1,
+        "p50": 29.6,
+        "p95": 43.1,
+        "max": 43.1
+      },
+      "verify": {
+        "n": 13,
+        "media": 32.1,
+        "p50": 29.4,
+        "p95": 42.1,
+        "max": 42.1
+      }
+    },
+    {
+      "nombre": "RFC 9106 segunda opción (m=64 MiB, t=3, p=4)",
+      "memoryCost": 65536,
+      "timeCost": 3,
+      "parallelism": 4,
+      "hash": {
+        "n": 13,
+        "media": 47.5,
+        "p50": 43.9,
+        "p95": 63.5,
+        "max": 63.5
+      },
+      "verify": {
+        "n": 13,
+        "media": 64.7,
+        "p50": 53.2,
+        "p95": 104.5,
+        "max": 104.5
+      }
+    }
+  ],
+  "api": {
+    "GET /api/health (sin autenticación)": {
+      "n": 55,
+      "media": 2,
+      "p50": 1.7,
+      "p95": 4.2,
+      "max": 5.8
+    },
+    "GET /api/expenses (20 elementos, autenticado)": {
+      "n": 55,
+      "media": 14.7,
+      "p50": 10.9,
+      "p95": 18.4,
+      "max": 196.5
+    },
+    "GET /api/expenses?q=… (búsqueda)": {
+      "n": 55,
+      "media": 11.1,
+      "p50": 11,
+      "p95": 15.9,
+      "max": 20.2
+    },
+    "GET /api/reports/summary (agregados 12 meses)": {
+      "n": 55,
+      "media": 13.1,
+      "p50": 10.3,
+      "p95": 34.4,
+      "max": 45.7
+    },
+    "POST /api/auth/refresh (rotación)": {
+      "n": 28,
+      "media": 14.2,
+      "p50": 13.8,
+      "p95": 20.7,
+      "max": 21.5
+    },
+    "POST /api/auth/login (con Argon2id)": {
+      "n": 6,
+      "media": 423.9,
+      "p50": 424.2,
+      "p95": 435.1,
+      "max": 435.1
+    },
+    "POST /api/auth/login (usuario inexistente)": {
+      "n": 6,
+      "media": 432,
+      "p50": 436.7,
+      "p95": 441.7,
+      "max": 441.7
+    }
+  }
+}

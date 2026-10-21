@@ -1,0 +1,143 @@
+# Canal de integración continua con controles de seguridad (DevSecOps).
+#
+#  1. build-test: SCA (npm audit + verificación de firmas), SAST ligero (ESLint security),
+#     comprobación de tipos, 110 pruebas automatizadas de seguridad, compilación y SBOM.
+#  2. postgres:   la misma batería de pruebas contra PostgreSQL 17 (motor de producción).
+#  3. codeql:     SAST semántico (consultas security-extended de GitHub CodeQL).
+#  4. dast:       DAST con OWASP ZAP (baseline) contra la aplicación en ejecución.
+#
+# Endurecimiento del propio canal (A03/A08:2025): acciones fijadas por SHA de commit,
+# permisos mínimos del GITHUB_TOKEN y credenciales no persistidas en el checkout.
+name: CI de seguridad
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: '0 6 * * 1'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DATABASE_URL: file:./data/ci.db
+
+jobs:
+  build-test:
+    name: Compilación, pruebas, SAST y SCA
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+      - name: Instalación reproducible (lockfile)
+        run: npm ci
+      - name: SCA - vulnerabilidades conocidas en dependencias
+        run: npm audit --audit-level=high
+      - name: SCA - firmas y procedencia de los paquetes del registro
+        run: npm audit signatures
+      - name: Generación del cliente de base de datos
+        run: npm run db:generate -w backend
+      - name: SAST - ESLint con reglas de seguridad
+        run: npm run lint
+      - name: Comprobación de tipos
+        run: npm run typecheck
+      - name: Pruebas automatizadas de seguridad
+        run: npm test
+      - name: Compilación
+        run: npm run build
+      - name: SBOM (CycloneDX)
+        run: npm sbom --sbom-format cyclonedx --omit dev > sbom.cdx.json
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: sbom-cyclonedx
+          path: sbom.cdx.json
+
+  postgres:
+    name: Pruebas sobre PostgreSQL 17
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:17-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24
+        # Base de datos efímera del trabajo: solo es accesible desde el propio ejecutor.
+        env:
+          POSTGRES_USER: gastoseguro
+          POSTGRES_PASSWORD: solo-ci-efimera
+          POSTGRES_DB: gastoseguro_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U gastoseguro" --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Pruebas automatizadas de seguridad sobre PostgreSQL
+        run: npm run test:postgres -w backend
+        env:
+          TEST_DATABASE_URL: postgresql://gastoseguro:solo-ci-efimera@localhost:5432/gastoseguro_test
+
+  codeql:
+    name: SAST - CodeQL
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: github/codeql-action/init@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
+        with:
+          languages: javascript-typescript
+          queries: security-extended
+      - uses: github/codeql-action/analyze@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
+
+  dast:
+    name: DAST - OWASP ZAP baseline
+    needs: build-test
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Preparación (secretos efímeros, migraciones y datos de demostración)
+        run: npm run setup
+      - run: npm run build
+      - name: Arranque de la aplicación
+        run: |
+          npm start > app.log 2>&1 &
+          for i in $(seq 1 30); do curl -fs http://localhost:4000/api/health && break; sleep 1; done
+      - uses: zaproxy/action-baseline@de8ad967d3548d44ef623df22cf95c3b0baf8b25 # v0.15.0
+        with:
+          target: http://localhost:4000
+          rules_file_name: .zap/rules.tsv
+          cmd_options: '-a -j'
+          fail_action: true
+          allow_issue_writing: false

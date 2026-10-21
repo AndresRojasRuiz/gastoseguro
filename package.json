@@ -1,0 +1,39 @@
+{
+  "name": "gastoseguro",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GastoSeguro: aplicación web de registro de gastos personales desarrollada siguiendo OWASP Top 10:2025 y OWASP ASVS 5.0 (TFE Máster Universitario en Ciberseguridad - UNIR).",
+  "type": "module",
+  "license": "MIT",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "setup": "node scripts/setup.mjs",
+    "dev": "node scripts/dev.mjs",
+    "build": "npm run build -w frontend && npm run build -w backend",
+    "start": "npm run start -w backend",
+    "test": "npm test -w backend",
+    "lint": "eslint .",
+    "typecheck": "npm run typecheck -w backend && npm run typecheck -w frontend",
+    "audit:deps": "npm audit --audit-level=high",
+    "sbom": "node scripts/sbom.mjs",
+    "manifest": "node scripts/manifest.mjs"
+  },
+  "overrides": {
+    "deepmerge-ts": "8.0.2",
+    "mysql2": "3.24.6"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "eslint": "10.12.0",
+    "eslint-plugin-security": "4.2.0",
+    "globals": "17.13.0",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.71.2"
+  }
+}

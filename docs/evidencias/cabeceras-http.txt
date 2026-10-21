@@ -1,0 +1,86 @@
+# GET / (interfaz)
+HTTP/1.1 200 OK
+accept-ranges: bytes
+cache-control: no-cache
+connection: keep-alive
+content-length: 717
+content-security-policy: default-src 'self';script-src 'self';style-src 'self';img-src 'self' data:;font-src 'self';connect-src 'self';object-src 'none';base-uri 'none';form-action 'self';frame-ancestors 'none';require-trusted-types-for 'script'
+content-type: text/html; charset=utf-8
+cross-origin-embedder-policy: require-corp
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+date: Wed, 14 Oct 2026 19:16:22 GMT
+etag: W/"2cd-1a13bcf8eaf"
+keep-alive: timeout=5
+last-modified: Wed, 14 Oct 2026 19:07:00 GMT
+origin-agent-cluster: ?1
+permissions-policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), interest-cohort=()
+referrer-policy: no-referrer
+x-content-type-options: nosniff
+x-dns-prefetch-control: off
+x-download-options: noopen
+x-frame-options: DENY
+x-permitted-cross-domain-policies: none
+x-request-id: 88764f48-e8b3-42e0-a0d2-cafc5dd770f2
+x-xss-protection: 0
+
+# GET /api/health (API)
+HTTP/1.1 200 OK
+access-control-allow-credentials: true
+access-control-expose-headers: X-Request-Id,Content-Disposition
+cache-control: no-store
+connection: keep-alive
+content-length: 15
+content-security-policy: default-src 'self';script-src 'self';style-src 'self';img-src 'self' data:;font-src 'self';connect-src 'self';object-src 'none';base-uri 'none';form-action 'self';frame-ancestors 'none';require-trusted-types-for 'script'
+content-type: application/json; charset=utf-8
+cross-origin-embedder-policy: require-corp
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+date: Wed, 14 Oct 2026 19:16:22 GMT
+etag: W/"f-VaSQ4oDUiZblZNAEkkN+sX+q3Sg"
+keep-alive: timeout=5
+origin-agent-cluster: ?1
+permissions-policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), interest-cohort=()
+pragma: no-cache
+ratelimit: "600-in-15min"; r=315; t=833
+ratelimit-policy: "600-in-15min"; q=600; w=900; pk=:YmIwY2Q1MTM2YWU1:
+referrer-policy: no-referrer
+vary: Origin
+x-content-type-options: nosniff
+x-dns-prefetch-control: off
+x-download-options: noopen
+x-frame-options: DENY
+x-permitted-cross-domain-policies: none
+x-request-id: 00c3327a-1129-4aad-ae4b-960d33d8d580
+x-xss-protection: 0
+
+# POST /api/auth/login (usuario de demostración; cuerpo omitido)
+HTTP/1.1 200 OK
+access-control-allow-credentials: true
+access-control-expose-headers: X-Request-Id,Content-Disposition
+cache-control: no-store
+connection: keep-alive
+content-length: 715
+content-security-policy: default-src 'self';script-src 'self';style-src 'self';img-src 'self' data:;font-src 'self';connect-src 'self';object-src 'none';base-uri 'none';form-action 'self';frame-ancestors 'none';require-trusted-types-for 'script'
+content-type: application/json; charset=utf-8
+cross-origin-embedder-policy: require-corp
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+date: Wed, 14 Oct 2026 19:16:22 GMT
+etag: W/"2cb-ov/1zEvEThG29sBpi90C3nGc5gg"
+keep-alive: timeout=5
+origin-agent-cluster: ?1
+permissions-policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), interest-cohort=()
+pragma: no-cache
+ratelimit: "600-in-15min"; r=314; t=833, "50-in-15min"; r=36; t=838, "10-in-15min"; r=8; t=838
+ratelimit-policy: "600-in-15min"; q=600; w=900; pk=:YmIwY2Q1MTM2YWU1:, "50-in-15min"; q=50; w=900; pk=:YmIwY2Q1MTM2YWU1:, "10-in-15min"; q=10; w=900; pk=:YzYyOGIyN2Y4ZDdj:
+referrer-policy: no-referrer
+set-cookie: __Host-gs_rt=[REDACTADO]; Path=/; Expires=Thu, 15 Oct 2026 07:16:22 GMT; HttpOnly; Secure; SameSite=Strict
+vary: Origin
+x-content-type-options: nosniff
+x-dns-prefetch-control: off
+x-download-options: noopen
+x-frame-options: DENY
+x-permitted-cross-domain-policies: none
+x-request-id: 6746a0ef-add3-4cd2-b585-708ba8fb6cc6
+x-xss-protection: 0
